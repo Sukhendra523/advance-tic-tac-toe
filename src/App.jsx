@@ -1,20 +1,20 @@
-import './App.css'
-import TicTacToe from './components/TicTacToe'
+import "./App.css";
+import TicTacToe from "./components/TicTacToe";
 
 function App() {
-
+  const multiTicTacToe = [3, 4, 5];
   return (
     <div>
-       <h1>3*3</h1>
-     <TicTacToe />
-      <h1>4*4</h1>
-     <TicTacToe boardSize={4}/>
-
-      <h1>5*5</h1>
-     <TicTacToe boardSize={5}/>
-        
+      {multiTicTacToe.map((size) => (
+        <>
+          <h1>
+            {size} * {size}
+          </h1>
+          <TicTacToe boardSize={size} />
+        </>
+      ))}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
