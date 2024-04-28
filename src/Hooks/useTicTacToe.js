@@ -41,16 +41,9 @@ const useTicTacToe = (boardSize) => {
   const calculateWinner = (currentBoard) => {
     for (let i = 0; i < WINNING_PATTERNS.length; i++) {
       const pattern = WINNING_PATTERNS[i];
-      let countX = 0;
-      let countO = 0;
-      for (let j = 0; j < pattern.length; j++) {
-        const cellValue = currentBoard[pattern[j]];
-        if (cellValue === "X") countX++;
-        if (cellValue === "O") countO++;
-      }
-
-      if (countX === boardSize) return "X";
-      if (countO === boardSize) return "O";
+      
+      if (pattern.every((p) => currentBoard[p] === "X")) return "X";
+      if (pattern.every((p) => currentBoard[p] === "O")) return "O";
     }
     return null;
   };
