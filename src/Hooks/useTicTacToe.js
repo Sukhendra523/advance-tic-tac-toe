@@ -1,37 +1,57 @@
 import { useState } from "react";
 
-const initialBoard = () => Array(9).fill(null);
+const initialBoard = (size) => Array(size * size).fill(null);
 
-const useTicTacToe = () => {
-  const [board, setBoard] = useState(initialBoard());
+const useTicTacToe = (boardSize) => {
+  const [board, setBoard] = useState(initialBoard(boardSize));
   const [isXTurn, setIsXTurn] = useState(true);
   const [winner, setWinner] = useState(null);
 
-    const WINNING_PATTERNS = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6],
-    ];
+  //(total number of steps need to reach next desired element ) + ( value of iterator )
+  const WINNING_PATTERNS = generateWinningPatterns();
+
+  function generateWinningPatterns() {
+    const patterns = [];
+
+    for (let i = 0; i < boardSize; i++) {
+      const horizontalPattern = [];
+      const verticalPattern = [];
+      for (let j = 0; j < boardSize; j++) {
+        //(total number of steps need to reach next desired element ) + ( value of iterator )
+        horizontalPattern.push(i * boardSize + j);
+        verticalPattern.push(j * boardSize + i);
+      }
+      patterns.push(horizontalPattern, verticalPattern);
+    }
+
+    const diagonal1 = [];
+    const diagonal2 = [];
+    for (let i = 0; i < boardSize; i++) {
+      // (total number of more steps need to reach next desired element ) = ( iterator )* (number of more steps need to reach next desired element )
+      diagonal1.push(i * (boardSize + 1));
+      diagonal2.push((i + 1) * (boardSize - 1));
+    }
+    patterns.push(diagonal1, diagonal2);
+
+    return patterns;
+  }
 
   const currentPlayer = isXTurn ? "X" : "O";
 
   const calculateWinner = (currentBoard) => {
     for (let i = 0; i < WINNING_PATTERNS.length; i++) {
-      const [a, b, c] = WINNING_PATTERNS[i];
-      if (
-        currentBoard[a] &&
-        currentBoard[a] === currentBoard[b] &&
-        currentBoard[a] === currentBoard[c]
-      ) {
-        return currentBoard[a];
+      const pattern = WINNING_PATTERNS[i];
+      let countX = 0;
+      let countO = 0;
+      for (let j = 0; j < pattern.length; j++) {
+        const cellValue = currentBoard[pattern[j]];
+        if (cellValue === "X") countX++;
+        if (cellValue === "O") countO++;
       }
-    }
 
+      if (countX === boardSize) return "X";
+      if (countO === boardSize) return "O";
+    }
     return null;
   };
 
@@ -65,7 +85,7 @@ const useTicTacToe = () => {
   };
 
   const resetGame = () => {
-    setBoard(initialBoard);
+    setBoard(initialBoard(boardSize));
     setIsXTurn(true);
     setWinner(null);
   };
