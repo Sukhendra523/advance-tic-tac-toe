@@ -1,11 +1,12 @@
 import useTicTacToe from "../Hooks/useTicTacToe";
-import './styles.scss';
+import "./styles.scss";
 
-function TicTacToe() {
-  const {board, handleClick, resetGame, getStatusMessage} = useTicTacToe();
+function TicTacToe({boardSize = 3}) {
+  const { board, handleClick, resetGame, getStatusMessage } =
+    useTicTacToe(boardSize);
 
   return (
-    <div className="game">
+    <div className="game" style={{"--board-size": boardSize}}>
       <div className="status">
         {getStatusMessage()}
         <button className="reset-button" onClick={resetGame}>
