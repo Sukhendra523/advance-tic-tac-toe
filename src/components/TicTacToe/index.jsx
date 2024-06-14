@@ -1,9 +1,15 @@
-import useTicTacToe from "../Hooks/useTicTacToe";
+import { useEffect } from "react";
+import useTicTacToe from "../../Hooks/useTicTacToe";
 import "./styles.scss";
 
 function TicTacToe({boardSize = 3}) {
   const { board, handleClick, resetGame, getStatusMessage } =
     useTicTacToe(boardSize);
+
+  useEffect(() => {
+    resetGame();
+  }, [boardSize])
+  
 
   return (
     <div className="game" style={{"--board-size": boardSize}}>
