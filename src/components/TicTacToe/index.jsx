@@ -3,7 +3,7 @@ import useTicTacToe from "../../Hooks/useTicTacToe";
 import "./styles.scss";
 
 function TicTacToe({boardSize = 3}) {
-  const { board, handleClick, resetGame, getStatusMessage } =
+  const { board, handleClick, resetGame, getStatusMessage, winner } =
     useTicTacToe(boardSize);
 
   useEffect(() => {
@@ -14,7 +14,10 @@ function TicTacToe({boardSize = 3}) {
   return (
     <div className="game" style={{"--board-size": boardSize}}>
       <div className="status">
-        {getStatusMessage()}
+        <span className={`${winner?'win':''}`}>
+          {getStatusMessage()}
+        </span>
+        
         <button className="reset-button" onClick={resetGame}>
           Reset Game
         </button>

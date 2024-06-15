@@ -83,7 +83,7 @@ const useTicTacToe = (boardSize) => {
     setWinner(null);
   };
 
-  return { board, handleClick, getStatusMessage, resetGame };
+  return { board, handleClick, getStatusMessage, resetGame, winner };
 };
 
 export default useTicTacToe;

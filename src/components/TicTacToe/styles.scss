@@ -10,6 +10,11 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
+
+    .win{
+      color: green;
+      font-weight: bold;
+    }
   }
   
   .board {
